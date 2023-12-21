@@ -61,8 +61,8 @@ void print(const List& l) {
 void list::createEmpty(List& l) {
     l = new node;
     l->info = EMPTYELEM;
-    l->prev = nullptr;
-    l->next = nullptr;
+    l->prev = l;
+    l->next = l;
 }
 
 /* restituisce true se la lista e' vuota (ed e' vuota se il next di l, e' l stessa */
@@ -86,13 +86,20 @@ int list::size(const List& l) {
 /* "smantella" la lista svuotandola */
 void list::clear(const List& l) {
     if(!isEmpty(l)){
+    
         List aux = l->next;
         List del = aux;
+        
         while(aux != l){
             aux = aux->next;
             delete del;
             del = aux;
+            aux = aux->next;
         }
+        
+        delete del;
+        l->next = l;
+        l->prev = l;
     }
 }
 
@@ -161,7 +168,6 @@ void list::addRear(Elem e,  const List& l) {
     n->prev = last;
     n->next = l;
     l->prev = n;
-
 }
 
 /* inserisce l'elemento all'inizio della lista */
@@ -180,11 +186,61 @@ void list::addFront(Elem e, const List& l) {
 /* cancella l'elemento in posizione pos dalla lista */
 void list::removePos(int pos, const List& l) {
 
+    if(isEmpty(l)){
+        return;
+    }
+    
+	List del = nullptr;
+
+
+    List curr = l->next;
+    List p = l;
+
+    for(int i = 1; i <= pos; i++){
+        if(curr == l) {
+            cout << "pos value exceedes the number of nodes in the list." << endl;
+            return;
+        }
+        curr = curr->next;
+        p = p->next;
+    }
+	del = curr;
+	curr = curr->next;
+	
+    p->next = curr;
+    curr->prev = p;
+    delete del;
 }
 
  /* cancella tutte le occorrenze dell'elemento elem, se presenti, dalla lista */
 void list::removeEl(Elem e, const List& l) {
 
+    if(isEmpty(l)){
+        return;
+    }
+    
+	List del = nullptr;
+	List aux = l->next;
+
+    while(aux != l){
+    	if(aux->info == e){
+    		
+    		List del = aux;
+    		aux = aux->next;
+    		List p = del->prev;
+    		
+    		p->next = aux;
+    		aux->prev = p;
+    		
+    		delete del;
+    	}else {
+    			aux = aux->next;
+    		  }
+    }
+    
+    
+    
+    
 }
 
 
