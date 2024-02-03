@@ -32,7 +32,6 @@ int findMinIndex(const vector<int> &v, const int begin, const int end) // finds 
       if (v.at(i) < v.at(begin))
       {
          min_index = i;
-         // cout << "min idx: " << i << "    min val: " << v[min_index] << endl;
       }
    }
    return min_index;
@@ -60,6 +59,21 @@ void selectionSort(vector<int> &v)
 ***************************************************************************************/
 void insertionSort(vector<int> &v)
 {
+   int prev, curr;
+   unsigned int size = v.size();
+
+   for (int i = 1; i < size; i++)
+   {
+      curr = i;
+      prev = i - 1;
+
+      while (prev >= 0 && v[curr] < v[prev])
+      {
+         scambia(v, curr, prev);
+         curr--;
+         prev--;
+      }
+   }
 }
 
 /**************************************************************************************

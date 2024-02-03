@@ -11,7 +11,8 @@ int main()
     printVector(v); // stampo il vector
 
     // Ordino il vector con una tipo di sorting a scelta:
-    selectionSort(v);
+    // selectionSort(v);
+    insertionSort(v);
     printVector(v); // stampo il vector ordinato
 
     return 0;
