@@ -81,6 +81,25 @@ void insertionSort(vector<int> &v)
 ***************************************************************************************/
 void bubbleSort(vector<int> &v)
 {
+   int size = v.size();
+
+   for (int i = 0; i < size; i++)
+   {
+      int curr = 0;
+      int next = curr + 1;
+      bool swapped = false;
+
+      for (int j = i; next < size; j++)
+      {
+         if (v[curr] > v[next])
+            scambia(v, curr, next);
+         ++curr;
+         ++next;
+         swapped = true;
+      }
+      if (!swapped)
+         return;
+   }
 }
 
 /**************************************************************************************
