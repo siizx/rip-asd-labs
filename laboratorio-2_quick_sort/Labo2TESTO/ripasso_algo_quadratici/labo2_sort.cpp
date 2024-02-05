@@ -107,14 +107,69 @@ void bubbleSort(vector<int> &v)
 ***************************************************************************************/
 void fondi(vector<int> &v, unsigned int inizio, unsigned int centro, unsigned int fine)
 {
+   vector<int> vsinistro, vdestro;
+
+   for (unsigned int i = inizio; i <= centro; i++)
+   {
+      vsinistro.push_back(v[i]);
+   }
+   for (unsigned int j = centro + 1; j <= fine; j++)
+   {
+      vdestro.push_back(v[j]);
+   }
+
+   unsigned int indicesinistra = 0;
+   unsigned int indicedestra = 0;
+   unsigned int maxsin = vsinistro.size();
+   unsigned int maxdes = vdestro.size();
+
+   for (unsigned int i = inizio; i <= fine; i++)
+   {
+      if (indicesinistra < maxsin && indicedestra < maxdes)
+      {
+         if (vsinistro[indicesinistra] > vdestro[indicedestra])
+         {
+            v[i] = vdestro[indicedestra];
+            ++indicedestra;
+            continue;
+         }
+         else
+         {
+            v[i] = vsinistro[indicesinistra];
+            ++indicesinistra;
+            continue;
+         }
+      }
+      else if (indicesinistra < maxsin && indicedestra == maxdes)
+      {
+         v[i] = vsinistro[indicesinistra];
+         ++indicesinistra;
+         continue;
+      }
+      else if (indicesinistra == maxsin && indicedestra < maxdes)
+      {
+         v[i] = vdestro[indicedestra];
+         ++indicedestra;
+         continue;
+      }
+   }
 }
 
 void ms(vector<int> &v, unsigned int inizio, unsigned int fine)
 {
+   if (inizio < fine)
+   {
+      unsigned int centro = (inizio + fine) / 2;
+      ms(v, inizio, centro);
+      ms(v, centro + 1, fine);
+      fondi(v, inizio, centro, fine);
+   }
 }
 
 void mergeSort(vector<int> &v)
 {
+   if (v.size() != 0)
+      ms(v, 0, v.size() - 1);
 }
 
 /**************************************************************************************
