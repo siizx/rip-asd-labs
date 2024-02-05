@@ -113,43 +113,43 @@ void fondi(vector<int> &v, unsigned int inizio, unsigned int centro, unsigned in
    {
       vsinistro.push_back(v[i]);
    }
-   for (unsigned int j = centro + 1; j <= fine; j++)
+   for (unsigned int i = centro + 1; i <= fine; i++)
    {
-      vdestro.push_back(v[j]);
+      vdestro.push_back(v[i]);
    }
 
-   unsigned int indicesinistra = 0;
-   unsigned int indicedestra = 0;
-   unsigned int maxsin = vsinistro.size();
-   unsigned int maxdes = vdestro.size();
+   unsigned int indicesinistro = 0;
+   unsigned int indicedestro = 0;
+   unsigned int sinmax = vsinistro.size();
+   unsigned int desmax = vdestro.size();
 
    for (unsigned int i = inizio; i <= fine; i++)
    {
-      if (indicesinistra < maxsin && indicedestra < maxdes)
+      if (indicesinistro < sinmax && indicedestro < desmax)
       {
-         if (vsinistro[indicesinistra] > vdestro[indicedestra])
+         if (vsinistro[indicesinistro] < vdestro[indicedestro])
          {
-            v[i] = vdestro[indicedestra];
-            ++indicedestra;
+            v[i] = vsinistro[indicesinistro];
+            ++indicesinistro;
             continue;
          }
          else
          {
-            v[i] = vsinistro[indicesinistra];
-            ++indicesinistra;
+            v[i] = vdestro[indicedestro];
+            indicedestro++;
             continue;
          }
       }
-      else if (indicesinistra < maxsin && indicedestra == maxdes)
+      else if (indicesinistro < sinmax && indicedestro == desmax)
       {
-         v[i] = vsinistro[indicesinistra];
-         ++indicesinistra;
+         v[i] = vsinistro[indicesinistro];
+         indicesinistro++;
          continue;
       }
-      else if (indicesinistra == maxsin && indicedestra < maxdes)
+      else
       {
-         v[i] = vdestro[indicedestra];
-         ++indicedestra;
+         v[i] = vdestro[indicedestro];
+         indicedestro++;
          continue;
       }
    }
