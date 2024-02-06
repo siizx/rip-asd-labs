@@ -14,7 +14,9 @@ int main()
     // selectionSort(v);
     // insertionSort(v);
     // bubbleSort(v);
-    mergeSort(v);
+    // mergeSort(v);
+    // quickSortTrivial(v);
+    quickSortRandom(v);
     printVector(v); // stampo il vector ordinato
 
     return 0;

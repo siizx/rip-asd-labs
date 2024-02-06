@@ -175,17 +175,80 @@ void mergeSort(vector<int> &v)
 /**************************************************************************************
             QUICKSORT CON SCELTA "BANALE" DEL PIVOT
 ***************************************************************************************/
+int partitionTrivial(vector<int> &v, int inizio, int fine)
+{
+   int pivot_index = inizio;        // scelta banale;
+   scambia(v, pivot_index, inizio); // metto il pivot in prima posizione (operazione inutile in questo specifico caso.)
+
+   int i = inizio + 1;
+   for (int j = inizio + 1; j <= fine; j++)
+   {
+      if (v[j] < v[inizio])
+      {
+         scambia(v, i, j);
+         i++;
+      }
+   }
+
+   scambia(v, inizio, i - 1);
+   return i - 1;
+}
+
+void qsTrivial(vector<int> &v, int inizio, int fine)
+{
+   if (inizio < fine)
+   {
+      int pivot_index = partitionTrivial(v, inizio, fine); // partition restituisce l'indice definitivo del pivot.
+      qsTrivial(v, inizio, pivot_index - 1);               // -1 perche' il pivot ovviamente e' gia al suo posto
+      qsTrivial(v, pivot_index + 1, fine);                 // +1 perche' il pivot ovviamente e' gia al suo posto
+   }
+}
 
 void quickSortTrivial(vector<int> &v)
 {
-   /* Implementare quickSort banale con partizione in place */
+   if (v.size() != 0)
+   {
+      qsTrivial(v, 0, v.size() - 1);
+   }
 }
 
 /**************************************************************************************
             QUICKSORT RANDOMIZZATO
 ***************************************************************************************/
 
+int partitionRandom(vector<int> &v, int inizio, int fine)
+{
+   int pivot_index = inizio + rand() % (fine - inizio + 1); // +1 e' per rendere incluso il valore 'fine'.
+   int i = inizio + 1;
+   scambia(v, inizio, pivot_index); // metto il pivot in prima posizione.
+
+   for (int j = inizio + 1; j <= fine; j++)
+   {
+      if (v[j] < v[inizio])
+      {
+         scambia(v, i, j);
+         i++;
+      }
+   }
+
+   scambia(v, inizio, i - 1);
+   return i - 1;
+}
+
+void qsRandom(vector<int> &v, int inizio, int fine)
+{
+   if (inizio < fine)
+   {
+      int pivot_index = partitionRandom(v, inizio, fine);
+      qsRandom(v, inizio, pivot_index - 1);
+      qsRandom(v, pivot_index + 1, fine);
+   }
+}
+
 void quickSortRandom(vector<int> &v)
 {
+   srand(time(NULL));
    /* Implementare quickSort randomizzato con partizione in place */
+   if (v.size() != 0)
+      qsRandom(v, 0, v.size() - 1);
 }
